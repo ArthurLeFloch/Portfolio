@@ -3,6 +3,7 @@ import type { Project } from '@/types/project-type'
 import { StatusType } from '@/types/status-type'
 import StatusComponent from '@/components/StatusComponent.vue'
 import TechnologyList from '@/components/TechnologyList.vue'
+import ArrowRightIcon from '@/icons/ArrowRightIcon.vue'
 
 function githubUrl(username: string, projectName: string): string {
   return `https://github.com/${username}/${projectName}/`
@@ -81,11 +82,11 @@ const data: Project[] = [
       <div class="section-content">
         <p>{{ item.description }}</p>
       </div>
-      <div class="section-links" v-if="item.githubUrl">
-        <a :href="item.githubUrl" target="_blank" class="link github">
+      <div v-if="item.githubUrl">
+        <a :href="item.githubUrl" target="_blank" class="github-button">
           <img src="/assets/icons/github.svg" alt="GitHub" />
           <span class="button-text">See on GitHub</span>
-          <span class="button-arrow">⯈</span>
+          <ArrowRightIcon />
         </a>
       </div>
     </div>
@@ -141,11 +142,11 @@ const data: Project[] = [
   margin: 0rem 0.5rem 1rem;
 }
 
-.link {
+.github-button {
   display: flex;
   align-items: center;
   padding: 0.2rem 1rem;
-  padding-right: 0.5rem;
+  padding-right: 0.2rem;
   height: 2.4rem;
   color: white;
   text-decoration: none;
@@ -153,27 +154,22 @@ const data: Project[] = [
   font-weight: 500;
   transition: background-color 0.15s;
   user-select: none;
-}
-
-.github {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
   border: var(--button-github-border);
   background-color: var(--button-github-background);
 }
 
-.link.github img {
+.github-button img {
   height: 1.2rem;
+  padding-right: 0.5rem;
 }
 
-.link.github.disabled {
+.github-button.disabled {
   background-color: unset;
   cursor: not-allowed;
   color: var(--button-github-color-disabled);
 }
 
-.link.github:hover:not(.disabled) {
+.github-button:hover:not(.disabled) {
   background-color: var(--button-github-background-hover);
 }
 </style>
