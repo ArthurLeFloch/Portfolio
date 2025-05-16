@@ -1,0 +1,41 @@
+name: CI/CD Pipeline
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.18.0'
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: Creating archive
+        run: |
+          tar -cvzf portfolio.tar.gz -C ./dist .
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy
+        run: |
+          scp -o StrictHostKeyChecking=no portfolio.tar.gz ${{ vars.SERVER_USER }}@${{ vars.SERVER_IP }}:~
+          ssh -o StrictHostKeyChecking=no ${{ vars.SERVER_USER }}@${{ vars.SERVER_IP }} <<EOF
+            set -e
+            cd ${{ vars.APP_PATH }}
+            tar -xvzf ~/portfolio.tar.gz -C ./
+            rm -rf ~/portfolio.tar.gz
+          EOF

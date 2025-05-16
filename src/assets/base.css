@@ -1,0 +1,50 @@
+:root {
+  box-sizing: border-box;
+  color: white;
+  font-family: 'system-ui', sans-serif;
+
+  --base-background: #101418;
+  --top-background: #1a1f24;
+  --border-color: #666;
+
+  --button-see-background: #4a6cf7;
+  --button-see-background-hover: #3a5ce5;
+
+  --button-github-border: 1px solid #666;
+  --button-github-background: #21282f;
+  --button-github-background-hover: #101418;
+  --button-github-background-disabled: #202428;
+  --button-github-color: #2a2d31;
+  --button-github-color-disabled: #aaa;
+
+  --text-primary: #fff;
+  --text-secondary: #ddd;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --base-background: #ebebeb;
+    --top-background: #ccc;
+    --border-color: #aaa;
+
+    --text-primary: #000;
+    --text-secondary: #555;
+
+    --button-github-color-disabled: #555;
+    color: black;
+  }
+}
+
+* {
+  box-sizing: border-box;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.7) transparent;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--base-background);
+}
