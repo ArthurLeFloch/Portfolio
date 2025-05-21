@@ -28,7 +28,7 @@ import ArrowRightIcon from '@/icons/ArrowRightIcon.vue'
 nav {
   display: flex;
   justify-content: center;
-  background-color: var(--top-background);
+  background-color: var(--secondary-background);
   padding: 0.5rem 0;
 
   width: 100%;
@@ -96,6 +96,15 @@ a:hover {
 @media screen and (max-width: 992px), screen and (max-width: 1400px) and (max-height: 800px) {
   #nav-container {
     max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  #name {
+    font-size: 1rem;
+  }
+  a {
+    font-size: 0.9rem;
   }
 }
 </style>

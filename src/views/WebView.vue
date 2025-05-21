@@ -193,7 +193,7 @@ function scrollTo(index: number) {
 
 .carousel-content {
   flex-grow: 1;
-  background-color: var(--base-background);
+  background-color: var(--primary-background);
   border-radius: 1rem;
   margin: 0 0.5rem;
   padding: 0 0.5rem;
@@ -221,7 +221,7 @@ function scrollTo(index: number) {
     padding: 0 0.5rem;
   }
   .carousel-showcase {
-    background-color: var(--top-background);
+    background-color: var(--secondary-background);
     padding: 0;
   }
   .carousel-description {
@@ -235,8 +235,10 @@ function scrollTo(index: number) {
   }
   .carousel-content {
     flex-grow: 0;
-    height: 50%;
+    flex-shrink: 0;
+    height: 40%;
     padding: 0.5rem 0;
+    margin-bottom: 0.5rem;
   }
   .carousel-showcase {
     flex-direction: column;
@@ -244,6 +246,7 @@ function scrollTo(index: number) {
   }
   .carousel-description {
     width: 100%;
+    height: 100%;
   }
 }
 </style>

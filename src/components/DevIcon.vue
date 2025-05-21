@@ -33,7 +33,7 @@ const filename = computed(() => {
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
   border-radius: 0.5rem;
-  background-color: var(--base-background);
+  background-color: var(--primary-background);
   padding: 0.25rem 0.5rem;
 }
 

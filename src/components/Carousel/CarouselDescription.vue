@@ -24,10 +24,10 @@ const emit = defineEmits(['onBackButtonClicked', 'onNextButtonClicked'])
       >
         <ChevronIcon orientation="left" />
       </button>
-      <h3 class="title">
-        {{ project.projectName }}
+      <div class="title-container">
+        <span class="title">{{ project.projectName }}</span>
         <StatusComponent :status="project.status" />
-      </h3>
+      </div>
       <button
         class="description-nav-button"
         @click="emit('onNextButtonClicked')"
@@ -123,21 +123,34 @@ const emit = defineEmits(['onBackButtonClicked', 'onNextButtonClicked'])
   height: 100%;
   width: 100%;
   padding: 1.5rem;
-  background-color: var(--top-background);
+  background-color: var(--secondary-background);
   border-radius: 8px;
   max-width: 500px;
   max-height: 700px;
 }
 
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+  flex-grow: 1;
+}
+
 .title {
   margin: 0;
-  font-size: 1.65rem;
+  font-size: 1.5rem;
+  text-wrap: nowrap;
+  overflow-x: auto;
+  font-weight: bold;
   color: var(--text-primary);
 }
 
 .description {
+  overflow-y: auto;
   flex-grow: 1;
-  font-size: 1rem;
+  flex-basis: 0;
   line-height: 1.6;
   color: var(--text-secondary);
   margin-bottom: 1.5rem;
@@ -228,6 +241,16 @@ const emit = defineEmits(['onBackButtonClicked', 'onNextButtonClicked'])
 }
 
 @media screen and (max-width: 992px), screen and (max-width: 1400px) and (max-height: 800px) {
+  .title {
+    font-size: 1.3rem;
+  }
+  .description {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+  .description-header {
+    margin-bottom: 0.5rem;
+  }
   .description-container {
     margin: 0;
     padding: 0 1rem 1rem 0;
@@ -244,6 +267,7 @@ const emit = defineEmits(['onBackButtonClicked', 'onNextButtonClicked'])
     padding: 0;
     padding-bottom: 1rem;
   }
+
   .link {
     display: flex;
   }

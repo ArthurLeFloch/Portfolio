@@ -112,10 +112,10 @@ const data: Project[] = [
   max-width: 800px;
   padding: 1rem;
   border-radius: 1rem;
-  background-color: var(--top-background);
+  background-color: var(--secondary-background);
 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border: 1px solid var(--top-background);
+  border: 1px solid var(--secondary-background);
 }
 .section:first-child {
   margin-top: 2rem;
