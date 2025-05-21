@@ -11,6 +11,7 @@ defineProps<{
       'dot-loading': status === 'wip',
       'dot-paused': status === 'paused',
     }"
+    :title="status === 'wip' ? 'Work In Progress' : status === 'paused' ? 'Paused' : 'Done'"
   ></span>
 </template>
 
