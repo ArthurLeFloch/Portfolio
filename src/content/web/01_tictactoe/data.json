@@ -2,5 +2,6 @@
   "$schema": "../schema.json",
   "githubRepository": "TicTacToe",
   "status": "done",
-  "technologies": ["JavaScript"]
+  "technologies": ["JavaScript"],
+  "websiteUrl": "https://tictactoe.alfloch.fr"
 }
