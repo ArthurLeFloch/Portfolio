@@ -19,6 +19,7 @@ defineProps<{
   display: flex;
   flex-direction: row;
   justify-content: center;
+  width: 100%;
 }
 
 .technologies {

@@ -25,7 +25,7 @@ const emit = defineEmits(['onBackButtonClicked', 'onNextButtonClicked'])
         <ChevronIcon orientation="left" />
       </button>
       <div class="title-container">
-        <span class="title">{{ project.projectName }}</span>
+        <span class="title">{{ project.title }}</span>
         <StatusComponent :status="project.status" />
       </div>
       <button
@@ -41,16 +41,16 @@ const emit = defineEmits(['onBackButtonClicked', 'onNextButtonClicked'])
       v-if="project.technologies && project.technologies.length > 0"
       :technologies="project.technologies"
     />
-    <p class="description">{{ project.description }}</p>
+    <p class="description" v-html="project.description"></p>
 
     <template class="links">
       <div class="website-buttons" v-if="project.websiteUrl || project.devWebsiteUrl">
         <a v-if="project.devWebsiteUrl" :href="project.devWebsiteUrl" target="_blank" class="link">
-          <span class="button-text">See dev website</span>
+          <span class="button-text">{{ $t('see_website_dev') }}</span>
           <ArrowRightIcon />
         </a>
         <a v-if="project.websiteUrl" :href="project.websiteUrl" target="_blank" class="link">
-          <span class="button-text">See website</span>
+          <span class="button-text">{{ $t('see_website') }}</span>
           <ArrowRightIcon />
         </a>
       </div>
@@ -60,13 +60,13 @@ const emit = defineEmits(['onBackButtonClicked', 'onNextButtonClicked'])
         target="_blank"
         class="link github"
       >
-        <template v-if="project.githubUrl !== null">
+        <template v-if="project.githubUrl">
           <img src="/assets/icons/github.svg" alt="GitHub" />
-          <span class="button-text">GitHub Repository</span>
+          <span class="button-text">{{ $t('see_github') }}</span>
           <ArrowRightIcon />
         </template>
         <template v-else>
-          <div class="github-fallback">GitHub Repository not available</div>
+          <div class="github-fallback">{{ $t('no_github') }}</div>
         </template>
       </a>
     </template>
@@ -154,6 +154,17 @@ const emit = defineEmits(['onBackButtonClicked', 'onNextButtonClicked'])
   line-height: 1.6;
   color: var(--text-secondary);
   margin-bottom: 1.5rem;
+}
+
+:deep(.description a) {
+  color: var(--text-secondary);
+  transition: color 0.15s;
+}
+:deep(.description a:hover) {
+  color: var(--text-primary);
+}
+:deep(.description strong) {
+  color: var(--text-primary);
 }
 
 .links {

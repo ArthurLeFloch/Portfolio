@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+
 import ArrowRightIcon from '@/icons/ArrowRightIcon.vue'
 </script>
 
@@ -8,8 +9,8 @@ import ArrowRightIcon from '@/icons/ArrowRightIcon.vue'
     <div id="nav-container">
       <RouterLink id="name" to="/"> Arthur Le Floch </RouterLink>
 
-      <RouterLink to="/web">Web</RouterLink>
-      <RouterLink to="/others">Others</RouterLink>
+      <RouterLink to="/web">{{ $t('web_projects_title') }}</RouterLink>
+      <RouterLink to="/others">{{ $t('other_projects_title') }}</RouterLink>
 
       <a
         id="github-button"

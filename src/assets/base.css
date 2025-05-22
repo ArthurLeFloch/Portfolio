@@ -16,16 +16,16 @@
   --border-color: #666;
   --button-github-color-disabled: #aaa;
 
-  --text-primary: #fff;
-  --text-secondary: #ddd;
+  --text-primary: white;
+  --text-secondary: #eee;
 }
 
 :root.light {
   --border-color: #aaa;
   --button-github-color-disabled: #555;
 
-  --text-primary: #000;
-  --text-secondary: #555;
+  --text-primary: black;
+  --text-secondary: #2a2a2a;
 }
 
 * {

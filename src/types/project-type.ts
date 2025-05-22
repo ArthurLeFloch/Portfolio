@@ -1,7 +1,7 @@
 import type { StatusType } from './status-type'
 
 export interface Project {
-  projectName: string
+  title: string
   description: string
   githubUrl: string | null
   technologies: string[]
@@ -9,7 +9,7 @@ export interface Project {
 }
 
 export interface WebProject extends Project {
-  imageSrc: string
+  imageUrl: string
   websiteUrl: string | null
   devWebsiteUrl: string | null
 }

@@ -1,91 +1,44 @@
 <script setup lang="ts">
 import type { Project } from '@/types/project-type'
-import { StatusType } from '@/types/status-type'
 import StatusComponent from '@/components/StatusComponent.vue'
 import TechnologyList from '@/components/TechnologyList.vue'
 import ArrowRightIcon from '@/icons/ArrowRightIcon.vue'
 
-function githubUrl(username: string, projectName: string): string {
-  return `https://github.com/${username}/${projectName}/`
+import { guessLanguage, Language } from '@/utils/guess-lang'
+import { onMounted, ref } from 'vue'
+
+const data = ref<Project[]>([])
+
+async function loadData(language: Language): Promise<Project[]> {
+  const dataFile = await fetch(`${import.meta.env.BASE_URL}content/others/${language}.json`)
+  return await dataFile.json()
 }
 
-function myGithubUrl(projectName: string): string {
-  return githubUrl('ArthurLeFloch', projectName)
-}
+onMounted(async () => {
+  data.value = await loadData(guessLanguage())
 
-const data: Project[] = [
-  {
-    projectName: 'rmx',
-    description:
-      'CLI to delete files based on their extensions. This was also to apply what I learnt from the Rust Book. Developed inside Neovim.',
-    githubUrl: myGithubUrl('rmx'),
-    technologies: ['Rust'],
-    status: StatusType.DONE,
-  },
-  {
-    projectName: 'Software Testing Project',
-    description:
-      'Optimization school group project, made to learn tests in depth (code coverage, mutation testing, mocks, spies, stubs, ...). It uses packages like Mockito, Pitest, as well as OR-Tools for optimization.',
-    githubUrl: null,
-    technologies: ['Java', 'Maven', 'JUnit'],
-    status: StatusType.DONE,
-  },
-  {
-    projectName: 'Advent of Code 2024',
-    description:
-      'My attempt to solve Advent of Code 2024 with one language per day, until day 20 (Python, C, Kotlin, C#, Powershell, Ada, Go, C++, Bash, Java, TypeScript, PHP, Ruby, ASMx86, Rust, Zig, Dart, Julia, Swift, R).',
-    githubUrl: myGithubUrl('AdventOfCode2024'),
-    technologies: [],
-    status: StatusType.PAUSED,
-  },
-  {
-    projectName: 'Peer-to-Peer',
-    description: 'Peer-to-Peer CLI school project. Client made in Java, Server made in C.',
-    githubUrl: null,
-    technologies: ['Java', 'Gradle', 'C'],
-    status: StatusType.DONE,
-  },
-  {
-    projectName: 'Password Manager',
-    description:
-      'Android application to store passwords securely, locally. Passwords are encrypted with a primary key.',
-    githubUrl: myGithubUrl('PasswordManager'),
-    technologies: ['Kotlin'],
-    status: StatusType.DONE,
-  },
-  {
-    projectName: 'Tower Defense V2',
-    description:
-      'Optimized Tower Defense developed with an SDL-based game framework. Data-driven, supports various locales.',
-    githubUrl: myGithubUrl('TowerDefenseV2'),
-    technologies: ['Python', 'SDL'],
-    status: StatusType.PAUSED,
-  },
-  {
-    projectName: 'Random API',
-    githubUrl: null,
-    description: 'Basic NodeJS API generating random floats between 0 and 1.',
-    technologies: ['Nodejs', 'npm', 'Express'],
-    status: StatusType.DONE,
-  },
-]
+  addEventListener('languagechange', async (event: Event) => {
+    const newLanguage = (event as CustomEvent).detail.language
+    data.value = await loadData(newLanguage)
+  })
+})
 </script>
 
 <template>
   <div id="section-container">
     <div v-for="(item, index) in data" :key="index" class="section">
-      <h3 class="section-title">
-        {{ item.projectName }}
+      <div class="section-title">
+        <h3 class="title">{{ item.title }}</h3>
         <StatusComponent :status="item.status" />
-      </h3>
+      </div>
       <TechnologyList v-if="item.technologies.length" :technologies="item.technologies" />
       <div class="section-content">
-        <p>{{ item.description }}</p>
+        <p class="description" v-html="item.description"></p>
       </div>
       <div v-if="item.githubUrl">
         <a :href="item.githubUrl" target="_blank" class="github-button">
           <img src="/assets/icons/github.svg" alt="GitHub" />
-          <span class="button-text">See on GitHub</span>
+          <span class="button-text">{{ $t('see_github') }}</span>
           <ArrowRightIcon />
         </a>
       </div>
@@ -100,7 +53,7 @@ const data: Project[] = [
   align-items: center;
   gap: 2rem;
   width: 100%;
-  padding: 0 1rem;
+  padding: 0 2rem;
   overflow-y: auto;
 }
 .section {
@@ -124,10 +77,23 @@ const data: Project[] = [
   margin-bottom: 2rem;
 }
 .section-title {
-  font-size: 1.5rem;
-  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-wrap: nowrap;
+  overflow-x: hidden;
+
   margin-top: 0;
   margin-bottom: 1rem;
+}
+.title {
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 .section-content {
   display: flex;
@@ -171,5 +137,25 @@ const data: Project[] = [
 
 .github-button:hover:not(.disabled) {
   background-color: var(--button-github-background-hover);
+}
+
+.description {
+  color: var(--text-secondary);
+}
+:deep(.description a) {
+  color: var(--text-secondary);
+  transition: color 0.15s;
+}
+:deep(.description a:hover) {
+  color: var(--text-primary);
+}
+:deep(.description strong) {
+  color: var(--text-primary);
+}
+
+@media screen and (max-width: 450px) {
+  .title {
+    font-size: 1.2rem;
+  }
 }
 </style>

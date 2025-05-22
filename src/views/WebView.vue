@@ -1,135 +1,32 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import CarouselComponent from '@/components/Carousel/CarouselComponent.vue'
 import CarouselDescription from '@/components/Carousel/CarouselDescription.vue'
 
 import type { WebProject } from '@/types/project-type.ts'
-import { StatusType } from '@/types/status-type.ts'
-import { myGithubUrl, githubUrl, assetUrl } from '@/utils/url-helper.ts'
 
-const data: WebProject[] = [
-  {
-    projectName: 'This Portfolio',
-    websiteUrl: 'https://alfloch.fr/',
-    devWebsiteUrl: null,
-    githubUrl: myGithubUrl('Portfolio'),
-    description: 'Portfolio made with VueJS.',
-    imageSrc: assetUrl('portfolio.webp'),
-    status: StatusType.WORK_IN_PROGRESS,
-    technologies: ['TypeScript', 'VueJS', 'GitHub Actions'],
-  },
-  {
-    projectName: 'Previous Portfolio',
-    websiteUrl: 'https://old.alfloch.fr/',
-    devWebsiteUrl: null,
-    githubUrl: null,
-    description: 'Portfolio made with VueJS.',
-    imageSrc: assetUrl('old-portfolio.webp'),
-    status: StatusType.DONE,
-    technologies: ['JavaScript', 'VueJS'],
-  },
-  {
-    projectName: 'Vulnerability Checker',
-    websiteUrl: 'https://rgu.alfloch.fr/',
-    devWebsiteUrl: 'https://rgu-dev.alfloch.fr/',
-    githubUrl: null,
-    description: 'Internship project to check for vulnerabilities (CWEs) in C/C++/Java code.',
-    imageSrc: assetUrl('checker.webp'),
-    status: StatusType.WORK_IN_PROGRESS,
-    technologies: [
-      'pnpm',
-      'Angular',
-      'TypeScript',
-      'Python',
-      'Redis',
-      'FastAPI',
-      'JWT',
-      'Gemini',
-      'Pytest',
-      'Playwright',
-      'GitHub Actions',
-    ],
-  },
-  {
-    projectName: 'Nebulift',
-    githubUrl: githubUrl('Mentoring-Bordeaux', 'nebulift'),
-    websiteUrl: null,
-    devWebsiteUrl: null,
-    description:
-      'Platform Engineering project, school group project. Allows to generate a cloud infrastructure and a GitHub project from a template, configured in a NuxtJS frontend.',
-    imageSrc: assetUrl('nebulift.webp'),
-    status: StatusType.DONE,
-    technologies: ['NuxtJS', 'Tailwind', 'C#', 'Pulumi', 'Azure', 'GitHub Actions'],
-  },
-  {
-    projectName: 'Image Editor',
-    websiteUrl: 'https://image.alfloch.fr/',
-    devWebsiteUrl: null,
-    githubUrl: myGithubUrl('ImageEditor'),
-    description:
-      'Image editor using VueJS and Flask. Rotate, flip, crop, apply filters and effects. First part: original image, second: bilateral filter, third: custom transformation.',
-    imageSrc: assetUrl('image.webp'),
-    status: StatusType.WORK_IN_PROGRESS,
-    technologies: ['VueJS', 'Python', 'Flask', 'JWT'],
-  },
-  {
-    projectName: 'Chess',
-    websiteUrl: 'https://dev.alfloch.fr/',
-    devWebsiteUrl: null,
-    githubUrl: null,
-    description:
-      'Chess game using React for the front-end. Back-end uses: NodeJS API, Flask (websockets), JWT tokens, MySQL database. Work in progress.',
-    imageSrc: assetUrl('chess.webp'),
-    status: StatusType.PAUSED,
-    technologies: ['React', 'React Router', 'Python', 'Flask', 'JWT'],
-  },
-  {
-    projectName: 'Vanlife',
-    websiteUrl: 'https://vanlife.alfloch.fr/',
-    devWebsiteUrl: null,
-    githubUrl: myGithubUrl('vanlife'),
-    description:
-      'Website made following a React & React Router tutorial. Involves a NodeJS API to fetch data.',
-    imageSrc: assetUrl('vanlife.webp'),
-    status: StatusType.DONE,
-    technologies: ['React', 'NodeJS', 'npm', 'Express'],
-  },
-  {
-    projectName: 'Minecraft Skin API',
-    websiteUrl: 'https://mcapi.alfloch.fr/merge/?user=PLAYER&accessory=coat',
-    devWebsiteUrl: null,
-    githubUrl: githubUrl('Eirbware', 'mc-skin-api'),
-    description:
-      'NodeJS API to fetch Minecraft skins, and apply accessories. Deployment using Docker.',
-    imageSrc: assetUrl('mcskinapi.webp'),
-    status: StatusType.DONE,
-    technologies: ['TypeScript', 'NodeJS', 'npm', 'Express'],
-  },
-  {
-    projectName: 'Garage',
-    websiteUrl: null,
-    devWebsiteUrl: null,
-    githubUrl: myGithubUrl('Garage'),
-    description:
-      'Garage management system made in a school group project. I notably worked on the hydration of the website (process implemented in a lot of JavaScript frameworks).',
-    imageSrc: assetUrl('garage.webp'),
-    status: StatusType.DONE,
-    technologies: ['PostgreSQL', 'PHP', 'JavaScript', 'Bootstrap'],
-  },
-  {
-    projectName: 'Tic Tac Toe',
-    websiteUrl: 'https://tictactoe.alfloch.fr/',
-    devWebsiteUrl: null,
-    githubUrl: myGithubUrl('TicTacToe'),
-    description: 'Tic-Tac-Toe game using websockets. Needs 2 players to play.',
-    imageSrc: assetUrl('tictactoe.webp'),
-    status: StatusType.DONE,
-    technologies: ['JavaScript'],
-  },
-]
+import { guessLanguage, Language } from '@/utils/guess-lang'
+
+const data = ref<WebProject[]>([])
+
+async function loadData(language: Language): Promise<WebProject[]> {
+  const dataFile = await fetch(`${import.meta.env.BASE_URL}content/web/${language}.json`)
+  return await dataFile.json()
+}
+
+onMounted(async () => {
+  data.value = await loadData(guessLanguage())
+
+  addEventListener('languagechange', async (event: Event) => {
+    const newLanguage = (event as CustomEvent).detail.language
+    data.value = await loadData(newLanguage)
+  })
+})
 
 const selectedProjectIndex = ref<number>(0)
-const selectedProject = computed(() => data[selectedProjectIndex.value])
+const selectedProject = computed<WebProject | null>(
+  () => data.value[selectedProjectIndex.value] || null,
+)
 const onItemSelected = (index: number) => {
   selectedProjectIndex.value = index
 }
@@ -147,10 +44,11 @@ function scrollTo(index: number) {
     <div class="carousel-content">
       <CarouselComponent
         ref="carouselRef"
+        v-if="data.length !== 0"
         :projects="
           data.map((project) => ({
-            title: project.projectName,
-            image: project.imageSrc,
+            title: project.title,
+            image: project.imageUrl,
           }))
         "
         @onItemSelected="onItemSelected($event)"
@@ -159,6 +57,7 @@ function scrollTo(index: number) {
     <div class="carousel-sidebar">
       <div class="carousel-description">
         <CarouselDescription
+          v-if="selectedProject"
           :project="selectedProject"
           :hasNextButton="selectedProjectIndex < data.length - 1"
           :hasBackButton="selectedProjectIndex > 0"
