@@ -1,0 +1,7 @@
+{
+  "$schema": "../schema.json",
+  "githubRepository": "vanlife",
+  "status": "done",
+  "technologies": ["React", "NodeJS", "npm", "Express"],
+  "websiteUrl": "https://vanlife.alfloch.fr/"
+}

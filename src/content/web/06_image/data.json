@@ -1,0 +1,7 @@
+{
+  "$schema": "../schema.json",
+  "githubRepository": "ImageEditor",
+  "status": "wip",
+  "technologies": ["VueJS", "Python", "Flask", "JWT"],
+  "websiteUrl": "https://image.alfloch.fr/"
+}

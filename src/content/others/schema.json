@@ -1,0 +1,28 @@
+{
+  "title": "Other Project Definition",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Reference to this JSON schema"
+    },
+    "githubRepository": {
+      "type": "string",
+      "description": "Name of the GitHub repository"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["wip", "done", "paused"],
+      "description": "Current status of the project"
+    },
+    "technologies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of technologies used"
+    }
+  },
+  "required": ["$schema", "status", "technologies"],
+  "additionalProperties": false
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "../schema.json",
+  "githubRepository": "TicTacToe",
+  "status": "done",
+  "technologies": ["JavaScript"]
+}

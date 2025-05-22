@@ -1,0 +1,8 @@
+{
+  "$schema": "../schema.json",
+  "githubOwner": "Eirbware",
+  "githubRepository": "mc-skin-api",
+  "status": "done",
+  "technologies": ["TypeScript", "NodeJS", "npm", "Express"],
+  "websiteUrl": "https://mcapi.alfloch.fr/merge/?user=PLAYER&accessory=coat"
+}

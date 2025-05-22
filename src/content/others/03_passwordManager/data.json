@@ -1,0 +1,6 @@
+{
+  "$schema": "../schema.json",
+  "githubRepository": "PasswordManager",
+  "status": "done",
+  "technologies": ["Kotlin", "Android"]
+}

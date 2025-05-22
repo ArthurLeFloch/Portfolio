@@ -1,0 +1,6 @@
+{
+  "$schema": "../schema.json",
+  "githubRepository": "TowerDefenseV2",
+  "status": "paused",
+  "technologies": ["Python", "SDL"]
+}

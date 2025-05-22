@@ -1,0 +1,7 @@
+{
+  "$schema": "../schema.json",
+  "githubRepository": "Portfolio",
+  "status": "wip",
+  "technologies": ["TypeScript", "VueJS", "GitHub Actions"],
+  "websiteUrl": "https://alfloch.fr/"
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "../schema.json",
+  "githubRepository": "Garage",
+  "status": "done",
+  "technologies": ["PostgreSQL", "PHP", "JavaScript", "Bootstrap"]
+}

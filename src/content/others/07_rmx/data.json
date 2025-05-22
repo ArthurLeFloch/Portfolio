@@ -1,0 +1,6 @@
+{
+  "$schema": "../schema.json",
+  "githubRepository": "rmx",
+  "status": "done",
+  "technologies": ["Rust"]
+}

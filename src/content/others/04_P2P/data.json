@@ -1,0 +1,5 @@
+{
+  "$schema": "../schema.json",
+  "status": "done",
+  "technologies": ["Java", "Gradle", "C"]
+}

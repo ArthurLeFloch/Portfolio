@@ -1,0 +1,42 @@
+{
+  "title": "Web Project Definition",
+  "type": "object",
+
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Reference to this JSON schema"
+    },
+    "websiteUrl": {
+      "type": ["string"],
+      "description": "The website URL"
+    },
+    "devWebsiteUrl": {
+      "type": ["string"],
+      "description": "The development/staging URL"
+    },
+    "githubRepository": {
+      "type": ["string"],
+      "description": "Name of the GitHub repository"
+    },
+    "githubOwner": {
+      "type": ["string"],
+      "description": "Owner / organization of the GitHub repository"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["wip", "done", "paused"],
+      "description": "Project status"
+    },
+    "technologies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of technologies used"
+    }
+  },
+
+  "required": ["$schema", "status", "technologies"],
+  "additionalProperties": false
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "../schema.json",
+  "githubOwner": "Mentoring-Bordeaux",
+  "githubRepository": "nebulift",
+  "status": "done",
+  "technologies": ["NuxtJS", "Tailwind", "C#", "Pulumi", "Azure", "GitHub Actions"]
+}

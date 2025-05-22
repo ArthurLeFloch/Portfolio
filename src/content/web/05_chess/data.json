@@ -1,0 +1,6 @@
+{
+  "$schema": "../schema.json",
+  "status": "paused",
+  "technologies": ["React", "React Router", "Python", "Flask", "JWT"],
+  "devWebsiteUrl": "https://dev.alfloch.fr/"
+}

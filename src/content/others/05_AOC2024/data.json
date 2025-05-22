@@ -1,0 +1,6 @@
+{
+  "$schema": "../schema.json",
+  "githubRepository": "AdventOfCode2024",
+  "status": "paused",
+  "technologies": []
+}
